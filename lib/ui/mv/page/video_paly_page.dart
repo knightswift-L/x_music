@@ -114,6 +114,9 @@ class _VideoPlayPageState extends State<VideoPlayPage>{
                        OrientationPlugin.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
                        isFull = true;
                      }
+                     setState(() {
+
+                     });
                    },
                    child: const Icon(Icons.fullscreen,size: 30,color: Colors.white,),
                  ),)

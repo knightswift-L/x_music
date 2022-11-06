@@ -37,11 +37,14 @@ class AudioPlayService {
            break;
        }
     });
-
+     int lastUpdate = DateTime.now().millisecondsSinceEpoch;
     _positionChanged = _players.onPositionChanged.listen((event) {
+      if(DateTime.now().millisecondsSinceEpoch - lastUpdate < 1000){
+        return;
+      }
+      lastUpdate = DateTime.now().millisecondsSinceEpoch;
       AudioPlayStatus status = AudioPlayStatus.playing;
       switch(_players.state){
-
         case PlayerState.stopped:
           status = AudioPlayStatus.stop;
           break;
@@ -60,9 +63,11 @@ class AudioPlayService {
   }
 
   Future play(AudioModel audioModel)async{
-    if(_players.state != PlayerState.stopped){
+    if(_players.state != PlayerState.stopped && audioModel != _audioQueue.first){
       await _players.stop();
-      _audioQueue.removeAt(0);
+      if(_audioQueue.isNotEmpty) {
+        _audioQueue.removeAt(0);
+      }
     }
     _audioQueue.insert(0,audioModel);
     if(audioModel.bytes != null){

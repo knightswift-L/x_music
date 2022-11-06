@@ -11,8 +11,8 @@ class AudioModel{
    int? time;
   AudioModel({this.id, this.musicId, this.url, this.filePath, this.bytes, this.name, this.artistName,this.time});
   AudioModel.fromJson(Map<dynamic,dynamic> json){
-    id = json["id"];
-    musicId = json["musicId"];
+    id = json["musicId"];
+    musicId = json["id"];
     url = json["remoteUrl"];
     name = json["musicName"];
     artistName = json["artistName"];
@@ -22,7 +22,7 @@ class AudioModel{
   }
   Map<String,dynamic> toJson(){
     return {
-      "musicId":musicId,
+      "musicId":id,
       "remoteUrl":url,
       "musicName":name,
       "artistName":artistName,
@@ -30,10 +30,12 @@ class AudioModel{
       "time":time
     };
   }
+
+  @override
+  int get hashCode => Object.hash(id, url,filePath,name,artistName);
+
+  @override
+  bool operator ==(Object other) {
+    return other is AudioModel && id == other.id;
+  }
 }
-///id integer primary key autoincrement,
-//   musicId text not null,
-//   musicName text not null,
-//   artistName text not null,
-//   filePath text not null,
-//   remoteUrl text not null,)

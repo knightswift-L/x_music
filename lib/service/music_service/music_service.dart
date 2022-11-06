@@ -22,7 +22,7 @@ class MusicService{
       if (response.isSuccess) {
         MusicDetailModel model = MusicDetailModel.fromJson(Map.from((response.data["data"] as List).first));
         AudioModel audioModel = AudioModel(
-          musicId: model.id.toString(),
+          id: model.id,
           name: name, url: model.url!, artistName: artistName, time: model.time!,
         );
         return audioModel;

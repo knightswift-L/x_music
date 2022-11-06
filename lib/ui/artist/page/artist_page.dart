@@ -53,6 +53,7 @@ class _ArtistPageState extends State<ArtistPage> {
         slivers: [
           SliverAppBar(
             pinned: true,
+            backgroundColor: Colors.white,
             title: Text(widget.arguments.name),
             expandedHeight: MediaQueryData.fromWindow(window).size.width * 0.812,
             flexibleSpace: FlexibleSpaceBar(
