@@ -31,6 +31,7 @@ class _MusicPlayPageState extends State<MusicPlayPage>{
   void initState() {
     super.initState();
     MusicService.getAudioModelById(widget.arguments.id, widget.arguments.artistName, widget.arguments.name).then((value) {
+      print("==========>$value");
       if (value != null) {
         setState(() {
           audioModel = value;

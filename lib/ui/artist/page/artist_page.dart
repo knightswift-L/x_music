@@ -81,19 +81,38 @@ class _ArtistPageState extends State<ArtistPage> {
                       context, MaterialPageRoute(builder: (context) => MusicPlayPage(arguments: MusicPlayPageArguments(musics[index].id.toString(), musics[index].name!, widget.arguments.name))));
                 },
                 child: Container(
-                  height: 50,
+                    height: 80,
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     alignment: Alignment.centerLeft,
                     child: Row(
                       children: [
-                        Expanded(
-                          flex:2,
-                          child: Text(musics[index].name ?? ""),
+                        if( musics[index].al?.picUrl != null)Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          clipBehavior: Clip.hardEdge,
+                          child: CachedNetworkImage(
+                            imageUrl: musics[index].al?.picUrl ?? "",
+                            height: 60,
+                            width: 60,
+                            fit: BoxFit.cover,
+                          ),
                         ),
+                        const SizedBox(width: 10,),
                         Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(musics[index].name ?? ""),
+                                if(musics[index].ar != null && musics[index].ar!.isNotEmpty)
+                                  Text(musics[index].ar!.map((e) => e.name ?? "").join(",") ?? "")
+                              ],
+                            )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             musics[index].mv != 0 ? GestureDetector(
                               onTap: () {
@@ -110,7 +129,6 @@ class _ArtistPageState extends State<ArtistPage> {
                                 DownLoadService.downloadMusic(musics[index].id.toString(), widget.arguments.name, musics[index].name!).then((value)async{
                                   if(value != null){
                                     var id = await DataBaseService().insert(TableName.downLoadMusicHistory, value.toJson());
-                                    print("==========>$id");
                                   }
                                 });
                               },
@@ -121,7 +139,7 @@ class _ArtistPageState extends State<ArtistPage> {
                               ),
                             ),
                           ],
-                        ))
+                        )
                       ],
                     )),
               );

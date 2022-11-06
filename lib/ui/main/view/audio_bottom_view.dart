@@ -49,7 +49,7 @@ class _AudioPlayBottomViewState extends State<AudioPlayBottomView>{
         child: Row(
           children: [
             GestureDetector(
-              onTap: audioPlayEvent != null ? ()async{
+              onTap: audioPlayEvent != null && audioModel != null ? ()async{
                 if(audioPlayEvent!.status == AudioPlayStatus.playing){
                   await AudioPlayService().pause();
                 }else if(audioPlayEvent!.status == AudioPlayStatus.paused){
@@ -76,13 +76,23 @@ class _AudioPlayBottomViewState extends State<AudioPlayBottomView>{
             Expanded(child: LinearProgressIndicator(
               backgroundColor: Colors.black12,
               color: Colors.blue,
-              value:audioPlayEvent?.position != null ? (audioPlayEvent?.position.inMilliseconds ?? 0)/(audioModel?.time ?? 0) : 0 ,
+              value:calculatePosition(),
             ))
 
           ],
         ),
       ),
     );
+  }
+
+  double calculatePosition(){
+    if(audioModel?.time == null || audioModel?.time == 0){
+      return 0;
+    }
+    if(audioPlayEvent?.position == null || audioPlayEvent!.position.inMilliseconds == 0){
+      return 0;
+    }
+    return audioPlayEvent!.position.inMilliseconds/ audioModel!.time!;
   }
 
 }

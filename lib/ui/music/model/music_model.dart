@@ -679,7 +679,7 @@ class Al {
       this.name, 
       this.picStr, 
       this.pic, 
-      this.alia,});
+      this.alia,this.picUrl,});
 
   Al.fromJson(dynamic json) {
     id = json['id'];
@@ -687,10 +687,12 @@ class Al {
     picStr = json['pic_str'];
     pic = json['pic'];
     alia = json['alia'] != null ? json['alia'].cast<String>() : [];
+    picUrl = json['picUrl'];
   }
   num? id;
   String? name;
   String? picStr;
+  String? picUrl;
   num? pic;
   List<String>? alia;
 Al copyWith({  num? id,
