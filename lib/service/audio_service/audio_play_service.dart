@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:x_music/extension/string_ext.dart';
 import 'package:x_music/service/event_service/event_bus_service.dart';
 import 'package:x_music/service/event_service/model/audio_play_event.dart';
 import 'package:x_music/service/audio_service/model/audio_model.dart';
@@ -75,7 +76,7 @@ class AudioPlayService {
     }else if(audioModel.filePath != null){
       return await _playDeviceFile(audioModel.filePath!);
     }
-    return _players.play(UrlSource(audioModel.url!));
+    return _players.play(UrlSource(audioModel.url!.toHttps()));
   }
 
   addToPlayQueue(List<AudioModel> models){

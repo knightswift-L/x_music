@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:net_request_manager/impl/net_request_manager.dart';
 import 'package:net_request_manager/model/cresponse.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:x_music/extension/string_ext.dart';
 import 'package:x_music/net/api.dart';
 import 'package:x_music/service/audio_service/model/audio_model.dart';
 import 'package:x_music/ui/music/model/Music_detail_model.dart';
@@ -15,7 +16,7 @@ class DownLoadService {
     }
     Directory directory = await getApplicationDocumentsDirectory();
     var path = "${directory.path}/$id.mp3";
-    var result = await NetRequestManager.instance.downloadFile(model.url!, savepath: path, downLoadProgress: (double value) {});
+    var result = await NetRequestManager.instance.downloadFile(model.url!.toHttps(), savepath: path, downLoadProgress: (double value) {});
     if (result.isSuccess) {
       model.filePath = path;
       return model;

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:net_request_manager/impl/net_request_manager.dart';
 import 'package:orientation/orientation.dart';
 import 'package:video_player/video_player.dart';
+import 'package:x_music/extension/string_ext.dart';
 import 'package:x_music/net/api.dart';
 import 'package:x_music/service/audio_service/audio_play_service.dart';
 import 'package:x_music/ui/mv/model/Mv_detail_model.dart';
-///http://vodkgeyttp8.vod.126.net/cloudmusic/I2RhMDQwMSIlMCQgIjAyMg==/mv/499047/21506e7ba0d1cc0747d80af08388d8a2.mp4?wsSecret=2bd95e6b14e000dabcea77eaca887798&wsTime=1667453607
 class VideoPlayPageArguments{
   final String id;
 
@@ -36,7 +36,7 @@ class _VideoPlayPageState extends State<VideoPlayPage>{
         setState(() {
           detailModel = MvDetailModel.fromJson(Map.from(value.data["data"]));
           if(detailModel?.url != null) {
-            playMusic(detailModel!.url!);
+            playMusic(detailModel!.url!.toHttps());
           }
         });
       }
